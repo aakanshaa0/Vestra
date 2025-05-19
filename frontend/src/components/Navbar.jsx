@@ -11,7 +11,7 @@ const Navbar = () => {
   const [visible, setVisible] = useState(false);
   return (
     <div className="flex items-center justify-between py-5 font-medium">
-      <h1 className='text-4xl font-serif cursor-pointer'>Vestra</h1>
+      <h1 className='text-3xl font-serif cursor-pointer'>VESTRA</h1>
       <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>
         <NavLink to='/' className='flex flex-col items-center gap-1'>
           <p>HOME</p>

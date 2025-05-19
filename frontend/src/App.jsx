@@ -10,6 +10,7 @@ import Product from './pages/Product';
 import PlaceOrder from './pages/PlaceOrder';
 import About from './pages/About';
 import Cart from './pages/Cart';
+import Hero from './components/Hero'
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/about" element={<About/>}/>
         <Route path="/cart" element={<Cart/>}/>
       </Routes>
+      <Hero/>
     </div>
   )
 }
