@@ -1,5 +1,5 @@
 import React from 'react';
-import heroImage from '../assets/hero-img.jpg';
+import { assets} from '../assets/frontend_assets/assets';
 import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
@@ -24,7 +24,7 @@ const Hero = () => {
       {/* Hero Right Side */}
       <div className='w-full sm:w-1/2'>
         <div className='w-full h-64 sm:h-full bg-gray-300 flex items-center justify-center text-gray-600'>
-            <img src={heroImage} alt='Hero Image' className='w-full h-full object-cover'/>
+            <img src={assets.hero_img} alt='Hero Image' className='w-full h-full object-cover'/>
         </div>
       </div>
     </div>
