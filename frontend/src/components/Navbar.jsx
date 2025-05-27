@@ -1,24 +1,32 @@
-import React from 'react';
+import React, { useState, useContext }  from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import  { useState } from 'react';
 import { IoIosSearch } from "react-icons/io";
 import { IoPersonOutline } from "react-icons/io5";
 import { IoBagOutline } from "react-icons/io5";
 import { IoIosMenu } from "react-icons/io";
 import { MdArrowBackIos } from "react-icons/md";
 import { SiOctopusdeploy   } from "react-icons/si";
+import { ShopContext } from '../context/ShopContext';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
+  const { setShowSearch } = useContext(ShopContext);
+  const navigate = useNavigate();
+  const handleSearchClick = () => {
+    setShowSearch(true);
+    navigate('/collection');
+  };
+
   return (
     <div className="flex items-center justify-between py-5 font-medium">
-      <h1 className='text-3xl font-serif cursor-pointer flex flex-row items-center gap-2'><SiOctopusdeploy   />Seapher</h1>
+      <Link to='/'><h1 className='text-3xl font-serif cursor-pointer flex flex-row items-center gap-2'><SiOctopusdeploy   />Seapher</h1></Link>
       <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>
         <NavLink to='/' className='flex flex-col items-center gap-1'>
           <p>HOME</p>
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
         </NavLink>
-        <NavLink to='/colletction' className='flex flex-col items-center gap-1'>
+        <NavLink to='/collection' className='flex flex-col items-center gap-1'>
           <p>COLLECTION</p>
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
         </NavLink>
@@ -32,7 +40,7 @@ const Navbar = () => {
         </NavLink>
       </ul>
         <div className='flex items-center gap-5'>
-          <IoIosSearch className='h-[25px] w-[25px] cursor-pointer' />
+          <IoIosSearch className='h-[25px] w-[25px] cursor-pointer' onClick={handleSearchClick}/>
           <div className='group relative'>
             <IoPersonOutline className='h-[25px] w-[25px] cursor-pointer' />
             <div className='hidden group-hover:block absolute dropdown-menu right-0 pt-4'>
@@ -46,7 +54,6 @@ const Navbar = () => {
           <Link to='/cart' className='relative'>
             <IoBagOutline className='h-[25px] w-[25px] cursor-pointer' />
             <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>10</p>
-            <div />
           </Link>
           <IoIosMenu onClick={() => setVisible(true)} className='h-[35px] w-[25px] cursor-pointer sm:hidden' />
         </div>
