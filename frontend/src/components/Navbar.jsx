@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-  const { setShowSearch } = useContext(ShopContext);
+  const { setShowSearch, getCartCount } = useContext(ShopContext);
   const navigate = useNavigate();
   const handleSearchClick = () => {
     setShowSearch(true);
@@ -53,7 +53,7 @@ const Navbar = () => {
           </div>
           <Link to='/cart' className='relative'>
             <IoBagOutline className='h-[25px] w-[25px] cursor-pointer' />
-            <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>10</p>
+            <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>{getCartCount()}</p>
           </Link>
           <IoIosMenu onClick={() => setVisible(true)} className='h-[35px] w-[25px] cursor-pointer sm:hidden' />
         </div>
