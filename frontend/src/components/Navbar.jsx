@@ -42,7 +42,7 @@ const Navbar = () => {
         <div className='flex items-center gap-5'>
           <IoIosSearch className='h-[25px] w-[25px] cursor-pointer' onClick={handleSearchClick}/>
           <div className='group relative'>
-            <IoPersonOutline className='h-[25px] w-[25px] cursor-pointer' />
+            <Link to='/login'><IoPersonOutline className='h-[25px] w-[25px] cursor-pointer' /></Link>
             <div className='hidden group-hover:block absolute dropdown-menu right-0 pt-4'>
               <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
                 <p className='cursor-pointer hover:text-black'>My Profile</p>
