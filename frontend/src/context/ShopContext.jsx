@@ -1,6 +1,6 @@
 import {createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { products } from '../assets/frontend_assets/assets';
+import { products as staticProducts } from '../assets/frontend_assets/assets';
 
 export const ShopContext = createContext();
 
@@ -10,7 +10,18 @@ const ShopContextProvider = (props) => {
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false);
     const [cartItems, setCartItems] = useState({});
+    const [products, setProducts] = useState(staticProducts); 
+    const [token, setToken] = useState(localStorage.getItem('token') || null);
     const navigate = useNavigate();
+
+    //Update token in localStorage when it changes
+    useEffect(() => {
+        if (token) {
+            localStorage.setItem('token', token);
+        } else {
+            localStorage.removeItem('token');
+        }
+    }, [token]);
 
     const addToCart = async(itemId, size)=>{
         let cartData = structuredClone(cartItems);
@@ -76,16 +87,45 @@ const ShopContextProvider = (props) => {
         return totalAmount;
     }
 
+    //Fetch products from backend, fallback to static if failed to fetch
     useEffect(()=>{
-        
+        fetch('/api/product/list')
+          .then(res => res.json())
+          .then(data => {
+            if(data.success && Array.isArray(data.products)){
+              const fixedProducts = data.products.map(product => ({
+                ...product,
+                image: product.images || product.image || [],
+              }));
+              const allProducts = [
+                ...fixedProducts,
+                ...staticProducts.filter(
+                  sp => !fixedProducts.some(bp => bp._id === sp._id)
+                )
+              ];
+              setProducts(allProducts);
+            } else {
+              setProducts(staticProducts);
+            }
+          })
+          .catch((err)=>{
+            console.error('Product fetch error:', err);
+            setProducts(staticProducts);
+          });
+    },[]);
+
+    useEffect(()=>{
     },[cartItems])
 
     const value = {
         products, currency, delivery_fee,
         search, setSearch, showSearch, setShowSearch,
-        cartItems, addToCart,
+        cartItems, setCartItems, addToCart,
         getCartCount, updateQuantity,
-        getCartAmount, navigate
+        getCartAmount, navigate,
+        backendUrl: 'http://localhost:3000',
+        token: localStorage.getItem('token') || null,
+        setToken: setToken
     }
     return (
         <ShopContext.Provider value={value}>

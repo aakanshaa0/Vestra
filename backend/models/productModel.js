@@ -4,11 +4,12 @@ const productSchema = new mongoose.Schema({
     name: {type: String, required: true},
     description: {type: String, required: true},
     price: {type: Number, required: true},
-    image: {type: Array, required: true},
+    images: {type: Array, required: true},
     category: {type: String, required: true},
     subCategory: {type: String, required: true},
     sizes: {type: Array, required: true},
-    bestSeller: {ttype: Boolean},
+    bestSeller: {type: Boolean},
+    uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
     date: {type: Number, required: true}
 })
 

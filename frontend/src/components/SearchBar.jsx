@@ -12,12 +12,13 @@ const SearchBar = () => {
     useEffect(() => {
         if (location.pathname === '/collection' && showSearch) {
             setVisible(true);
-        } else {
+        } 
+        else {
             setVisible(false);
         }
     }, [location, showSearch]);
 
-    if (!visible) return null;
+    if(!visible) return null;
 
   return showSearch ? (
     <div className='border-t border-b bg-gray-50 text-center'>

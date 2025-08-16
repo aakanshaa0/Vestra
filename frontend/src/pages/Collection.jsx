@@ -3,9 +3,11 @@ import { ShopContext } from '../context/ShopContext';
 import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { products as staticProducts } from '../assets/frontend_assets/assets';
 
 const Collection = () => {
   const { products, search, showSearch } = useContext(ShopContext);
+  const allProducts = [...(products || []), ...(staticProducts || [])];
   const [showFilter, setShowFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
@@ -31,7 +33,7 @@ const Collection = () => {
   }
 
   const applyFilter = () => {
-    let productsCopy = products.slice();
+    let productsCopy = allProducts.slice();
 
     if(showSearch && search){
       productsCopy = productsCopy.filter(item=>item.name.toLowerCase().includes(search.toLowerCase()))
@@ -78,7 +80,7 @@ const Collection = () => {
         </p>
         {/*Category Filter*/}
         <div className={`border border-gray-300 pl-5 py-3 mt-6 ${showFilter? '':'hidden'} sm:block`}>
-          <p className='mb-3 text-sm fborderont-medium'>CATEGORIES</p>
+          <p className='mb-3 text-sm font-medium'>CATEGORIES</p>
           <div className='flex flex-col gap-2 text-sm font-light text-gray-700'>
             <p className='flex gap-2'>
               <input className='w-3' type="checkbox" value={'Men'} onClick={toggleCategory}/> Men

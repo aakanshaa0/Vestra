@@ -1,17 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
-@import "tailwindcss";
-
-*{
-    font-family: Outfit;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-select,input,textarea{
-    border: 1px solid #b3e1af;
-    outline-color: #68d35e;
-    border-radius: 4px;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
 }
 
-.active{
-    background-color: #c9d6ca;
-    border-color: #68d35e
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f3f4f6;
 }

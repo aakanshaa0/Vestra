@@ -1,5 +1,6 @@
 import {v2 as cloudinary} from "cloudinary";
 import productModel from '../models/productModel.js';
+
 //function for add product
 const addProduct = async (req, res) => {
     try{
@@ -19,6 +20,11 @@ const addProduct = async (req, res) => {
             })
         )
 
+        const jwt = await import('jsonwebtoken');
+        const token = req.headers.token;
+        const decoded = jwt.default.verify(token, process.env.JWT_SECRET);
+        const adminId = decoded.id;
+
         const productData = {
             name,
             description,
@@ -28,6 +34,7 @@ const addProduct = async (req, res) => {
             bestSeller: bestSeller === "true" ? true: false,
             sizes: JSON.parse(sizes),
             images: imagesUrl,
+            uploadedBy: adminId,
             date: Date.now()
         }
         console.log(productData);
@@ -45,7 +52,16 @@ const addProduct = async (req, res) => {
 //function for list product
 const listProduct = async (req, res) => {
     try{
-        const products = await productModel.find({});
+        let products;
+        const token = req.headers.token;
+        if (token) {
+            const jwt = await import('jsonwebtoken');
+            const decoded = jwt.default.verify(token, process.env.JWT_SECRET);
+            const adminId = decoded.id;
+            products = await productModel.find({ uploadedBy: adminId });
+        } else {
+            products = await productModel.find({});
+        }
         res.json({success:true, products});
     }
     catch(error){
