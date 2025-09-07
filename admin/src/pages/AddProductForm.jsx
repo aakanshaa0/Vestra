@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import config from '../config/config.js';
+
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
 const categories = ['Men', 'Women', 'Kids'];
 const subCategories = ['Topwear', 'Bottomwear', 'Winterwear'];
@@ -44,7 +45,7 @@ export default function AddProductForm({ onProductAdded }) {
       formData.append('sizes', JSON.stringify(sizes));
       formData.append('bestSeller', bestSeller);
       const token = localStorage.getItem('admin_token');
-      const res = await fetch(`${config.apiUrl}/product/add`, {
+      const res = await fetch(`${API_BASE_URL}/api/product/add`, {
         method: 'POST',
         body: formData,
         headers: { 'token': token }

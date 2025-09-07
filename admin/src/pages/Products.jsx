@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import config from '../config/config.js';
+
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -19,7 +20,7 @@ export default function Products() {
 
         console.log('🔍 Fetching products with token:', token.substring(0, 20) + '...');
         
-        const response = await fetch(`${config.apiUrl}/product/list`, {
+        const response = await fetch(`${API_BASE_URL}/api/product/list`, {
           headers: {
             'token': token,
           },
@@ -64,7 +65,7 @@ export default function Products() {
         setLoading(true);
         const token = localStorage.getItem('admin_token');
         
-        const response = await fetch(`${config.apiUrl}/product/remove`, {
+        const response = await fetch(`${API_BASE_URL}/api/product/remove`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 import {createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { products as staticProducts } from '../assets/frontend_assets/assets';
-import config from '../config/config.js';
+import config from '../config/config';
 
 export const ShopContext = createContext();
 
@@ -47,7 +47,7 @@ const ShopContextProvider = (props) => {
         if (!token) return;
         
         try {
-            const response = await fetch(backendUrl + '/api/cart/sync', {
+            const response = await fetch(config.backendUrl + '/api/cart/sync', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const ShopContextProvider = (props) => {
         if (!token) return;
         
         try {
-            const response = await fetch(backendUrl + '/api/cart/get', {
+            const response = await fetch(config.backendUrl + '/api/cart/get', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -104,7 +104,7 @@ const ShopContextProvider = (props) => {
         //If user is logged in, also update backend
         if (token) {
             try {
-                const response = await fetch(backendUrl + '/api/cart/add', {
+                const response = await fetch(config.backendUrl + '/api/cart/add', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const ShopContextProvider = (props) => {
 
         if (token) {
             try {
-                const response = await fetch(backendUrl + '/api/cart/update', {
+                const response = await fetch(config.backendUrl + '/api/cart/update', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -184,7 +184,7 @@ const ShopContextProvider = (props) => {
 
         if (token) {
             try {
-                const response = await fetch(backendUrl + '/api/cart/clear', {
+                const response = await fetch(config.backendUrl + '/api/cart/clear', {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`
