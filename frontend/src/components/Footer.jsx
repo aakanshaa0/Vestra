@@ -8,7 +8,7 @@ const Footer = () => {
             <div>
                 <Link to='/'><h1 className='text-4xl font-mono font-bold italic cursor-pointer flex flex-row items-center gap-2'>VESTRA</h1></Link>
                 <p className='w-full md:sm:w-2/3 text-gray-600'>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    VESTRA is your premier destination for fashion-forward clothing that combines style, quality, and affordability. We curate the latest trends and timeless classics to help you express your unique personality through fashion. Shop with confidence knowing every piece is selected with care for our valued customers.
                 </p>
             </div>
             <div>

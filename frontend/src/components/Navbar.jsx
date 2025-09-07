@@ -53,11 +53,11 @@ const Navbar = () => {
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
         </a>
       </ul>
-        <div className='flex items-center gap-5'>
-          <IoIosSearch className='h-[25px] w-[25px] cursor-pointer' onClick={handleSearchClick}/>
-          <div className='group relative'>
-            <IoPersonOutline className='h-[25px] w-[25px] cursor-pointer' />
-            <div className='hidden group-hover:block absolute dropdown-menu right-0 pt-4'>
+      <div className='flex items-center gap-5'>
+        <IoIosSearch className='h-[25px] w-[25px] cursor-pointer' onClick={handleSearchClick}/>
+        <div className='group relative'>
+          <IoPersonOutline className='h-[25px] w-[25px] cursor-pointer' />
+          <div className='hidden group-hover:block absolute dropdown-menu right-0 pt-4'>
               {localStorage.getItem('token') ? (
                 <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
                   <Link to='/profile' className='cursor-pointer hover:text-black'>My Profile</Link>
@@ -79,8 +79,9 @@ const Navbar = () => {
           </Link>
           <IoIosMenu onClick={() => setVisible(true)} className='h-[35px] w-[25px] cursor-pointer sm:hidden' />
         </div>
+        
         {/*Sidebar Menu for Small screen*/}
-      <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible? 'w-full':'w-0'}`}>
+        <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible? 'w-full':'w-0'}`}>
         <div className='flex flex-col text-gray-600'>
           <div onClick={()=> setVisible(false)} className='flex items-center gap-4 p-3 cursor-pointer'>
             <MdArrowBackIos className='h-[17px] w-[17px] cursor-pointer' />

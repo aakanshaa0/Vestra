@@ -35,27 +35,93 @@ const ShopContextProvider = (props) => {
     useEffect(() => {
         if (token) {
             localStorage.setItem('token', token);
+            syncCartToBackend();
         } 
         else {
             localStorage.removeItem('token');
         }
     }, [token]);
 
-    const addToCart = async(itemId, size)=>{
+    const syncCartToBackend = async () => {
+        if (!token) return;
+        
+        try {
+            const response = await fetch(backendUrl + '/api/cart/sync', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ cartData: cartItems })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                console.log('Cart synced to backend successfully');
+            }
+        } catch (error) {
+            console.error('Error syncing cart to backend:', error);
+        }
+    };
+
+    const loadCartFromBackend = async () => {
+        if (!token) return;
+        
+        try {
+            const response = await fetch(backendUrl + '/api/cart/get', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                setCartItems(data.cartData || {});
+            }
+        } catch (error) {
+            console.error('Error loading cart from backend:', error);
+        }
+    };
+
+    const addToCart = async (itemId, size) => {
         let cartData = structuredClone(cartItems);
 
         if (!cartData[itemId]) {
-        cartData[itemId] = {};
+            cartData[itemId] = {};
         }
         
-        if(cartData[itemId][size]){
-            cartData[itemId][size]+=1;
+        if (cartData[itemId][size]) {
+            cartData[itemId][size] += 1;
+        } 
+        else {
+            cartData[itemId][size] = 1;
         }
-        else{
-            cartData[itemId][size]=1;
-        }
+        
         setCartItems(cartData);
-    }
+
+        //If user is logged in, also update backend
+        if (token) {
+            try {
+                const response = await fetch(backendUrl + '/api/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ itemId, size })
+                });
+                
+                const data = await response.json();
+                if (!data.success) {
+                    console.error('Error adding to cart in backend:', data.message);
+                }
+            } 
+            catch (error) {
+                console.error('Error adding to cart:', error);
+            }
+        }
+    };
 
     const getCartCount = () => {
         let totalCount = 0;
@@ -86,13 +152,54 @@ const ShopContextProvider = (props) => {
                 delete cartData[itemId];
             }
         }
+        
         setCartItems(cartData);
-    }
 
-    const clearCart = () => {
+        if (token) {
+            try {
+                const response = await fetch(backendUrl + '/api/cart/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ itemId, size, quantity })
+                });
+                
+                const data = await response.json();
+                if (!data.success) {
+                    console.error('Error updating cart in backend:', data.message);
+                }
+            } 
+            catch (error) {
+                console.error('Error updating cart:', error);
+            }
+        }
+    };
+
+    const clearCart = async () => {
         setCartItems({});
         localStorage.removeItem('cartItems');
-    }
+
+        if (token) {
+            try {
+                const response = await fetch(backendUrl + '/api/cart/clear', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                if (!data.success) {
+                    console.error('Error clearing cart in backend:', data.message);
+                }
+            } 
+            catch (error) {
+                console.error('Error clearing cart:', error);
+            }
+        }
+    };
 
     const getCartAmount = () =>{
         let totalAmount=0;
@@ -139,6 +246,13 @@ const ShopContextProvider = (props) => {
     },[]);
 
     useEffect(()=>{
+        // Load cart from backend when user is logged in
+        if (token) {
+            loadCartFromBackend();
+        }
+    },[]);
+
+    useEffect(()=>{
     },[cartItems])
 
     const value = {
@@ -146,7 +260,7 @@ const ShopContextProvider = (props) => {
         search, setSearch, showSearch, setShowSearch,
         cartItems, setCartItems, addToCart,
         getCartCount, updateQuantity, clearCart,
-        getCartAmount, navigate,
+        getCartAmount, navigate, loadCartFromBackend,
         backendUrl: 'http://localhost:3000',
         token: localStorage.getItem('token') || null,
         setToken: setToken
