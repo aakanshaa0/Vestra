@@ -12,7 +12,7 @@ export default function Dashboard() {
           </button>
       </div>
       <div>
-        <AddProductForm onProductAdded={() => console.log('Product added successfully!')} />
+        <AddProductForm />
       </div>
     </div>
   );
