@@ -48,7 +48,7 @@ const Navbar = () => {
           <p>CONTACT</p>
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
         </NavLink>
-        <a href='http://localhost:5174' target='_blank' rel='noopener noreferrer' className='flex flex-col items-center gap-1'>
+        <a href='https://vestraa-adminpanel.vercel.app/' target='_blank' rel='noopener noreferrer' className='flex flex-col items-center gap-1'>
           <p className='border-2 border-gray-700 rounded-full px-3 py-0.2 hover:bg-gray-700 hover:text-white transition-all duration-300'>ADMIN</p>
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
         </a>
