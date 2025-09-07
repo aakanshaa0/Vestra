@@ -33,7 +33,7 @@ A full-stack ecommerce platform built with the MERN stack.
 1. **Clone repository**
    ```bash
    git clone <repository-url>
-   cd ecommerce-app
+   cd Vestra
    ```
 
 2. **Backend Setup**
