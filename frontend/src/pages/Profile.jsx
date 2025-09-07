@@ -117,14 +117,12 @@ export default function Profile() {
 
 
   const handleLogout = () => {
+    //Remove tokens but keep cart items
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    
-    setCartItems({});
-    
+    localStorage.removeItem('user');    
     navigate('/');
     
-    alert('Logged out successfully!');
+    alert('Logged out successfully! Your cart items are saved.');
   };
 
   if (loading) {

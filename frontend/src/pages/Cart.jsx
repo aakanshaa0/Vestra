@@ -6,7 +6,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import CartTotal from "../components/CartTotal";
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext);
+  const { products, currency, cartItems, updateQuantity, navigate, clearCart } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
@@ -25,13 +25,40 @@ const Cart = () => {
     setCartData(tempData);
   }, [cartItems]);
 
+  const handleClearCart = () => {
+    if (window.confirm('Are you sure you want to clear your entire cart? This action cannot be undone.')) {
+      clearCart();
+    }
+  };
+
   return (
     <div className='border-t pt-14'>
-      <div className='text-2xl mb-3'>
+      <div className='text-2xl mb-3 flex justify-between items-center'>
         <Title text1={'YOUR'} text2={'CART'} />
+        {cartData.length > 0 && (
+          <button 
+            onClick={handleClearCart}
+            className='bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded transition-colors'
+          >
+            Clear Cart
+          </button>
+        )}
       </div>
       <div>
-        {
+        {cartData.length === 0 ? (
+          <div className='text-center py-16'>
+            <p className='text-gray-500 text-lg mb-4'>Your cart is empty</p>
+            <p className='text-gray-400 text-sm mb-6'>
+              Don't worry, your cart items will be saved even after you log out!
+            </p>
+            <button 
+              onClick={() => navigate('/collection')}
+              className='bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors'
+            >
+              Continue Shopping
+            </button>
+          </div>
+        ) : (
           cartData.map((item, index) => {
             const productData = products.find((product) => product._id === item._id);
             return (
@@ -51,16 +78,18 @@ const Cart = () => {
               </div>
             )
           })
-        }
+        )}
       </div>
-      <div className='flex justify-end my-20'>
-        <div className='w-full sm"w-[450px]'>
-           <CartTotal />
-           <div className='w-full text-end'>
-            <button onClick={(()=>navigate('/place-order'))} className='bg-black text-white text-sm my-8 px-8 py-3'>PROCEED TO CHECKOUT</button>
-           </div> 
+      {cartData.length > 0 && (
+        <div className='flex justify-end my-20'>
+          <div className='w-full sm"w-[450px]'>
+             <CartTotal />
+             <div className='w-full text-end'>
+              <button onClick={(()=>navigate('/place-order'))} className='bg-black text-white text-sm my-8 px-8 py-3'>PROCEED TO CHECKOUT</button>
+             </div> 
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

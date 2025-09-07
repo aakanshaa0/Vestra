@@ -19,14 +19,13 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+    //Remove authentication tokens but keep cart items
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    
-    setCartItems({});
-    
+
     navigate('/');
     
-    alert('Logged out successfully!');
+    alert('Logged out successfully! Your cart items are saved.');
   };
 
   return (
@@ -49,6 +48,10 @@ const Navbar = () => {
           <p>CONTACT</p>
           <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
         </NavLink>
+        <a href='http://localhost:5174' target='_blank' rel='noopener noreferrer' className='flex flex-col items-center gap-1'>
+          <p className='border-2 border-gray-700 rounded-full px-3 py-0.2 hover:bg-gray-700 hover:text-white transition-all duration-300'>ADMIN</p>
+          <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
+        </a>
       </ul>
         <div className='flex items-center gap-5'>
           <IoIosSearch className='h-[25px] w-[25px] cursor-pointer' onClick={handleSearchClick}/>
@@ -59,12 +62,13 @@ const Navbar = () => {
                 <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
                   <Link to='/profile' className='cursor-pointer hover:text-black'>My Profile</Link>
                   <Link to='/orders' className='cursor-pointer hover:text-black'>Orders</Link>
+                  <a href='http://localhost:5174' target='_blank' rel='noopener noreferrer' className='cursor-pointer hover:text-black'>Admin Panel</a>
                   <p className='cursor-pointer hover:text-black' onClick={handleLogout}>Logout</p>
                 </div>
               ) : (
                 <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
                   <Link to='/login' className='cursor-pointer hover:text-black'>Login</Link>
-                  <a href='http://localhost:5174' className='cursor-pointer hover:text-black'>Admin Panel</a>
+                  <a href='http://localhost:5174' target='_blank' rel='noopener noreferrer' className='cursor-pointer hover:text-black'>Admin Panel</a>
                 </div>
               )}
             </div>
@@ -82,10 +86,11 @@ const Navbar = () => {
             <MdArrowBackIos className='h-[17px] w-[17px] cursor-pointer' />
             <p>Back</p>
           </div>
-          <NavLink className='py-2 pl-6 border' to='/'>HOME</NavLink>
-          <NavLink className='py-2 pl-6 border' to='/collection'>COLLECTION</NavLink>
-          <NavLink className='py-2 pl-6 border' to='/about'>ABOUT</NavLink>
-          <NavLink className='py-2 pl-6 border' to='/contact'>CONTACT</NavLink>
+          <NavLink onClick={()=> setVisible(false)} className='py-2 pl-6 border' to='/'>HOME</NavLink>
+          <NavLink onClick={()=> setVisible(false)} className='py-2 pl-6 border' to='/collection'>COLLECTION</NavLink>
+          <NavLink onClick={()=> setVisible(false)} className='py-2 pl-6 border' to='/about'>ABOUT</NavLink>
+          <NavLink onClick={()=> setVisible(false)} className='py-2 pl-6 border' to='/contact'>CONTACT</NavLink>
+          <a href='http://localhost:5174' target='_blank' rel='noopener noreferrer' className='py-2 pl-6 border cursor-pointer hover:bg-gray-50'>ADMIN PANEL</a>
         </div>
       </div>
     </div>

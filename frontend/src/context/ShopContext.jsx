@@ -14,11 +14,29 @@ const ShopContextProvider = (props) => {
     const [token, setToken] = useState(localStorage.getItem('token') || null);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const savedCart = localStorage.getItem('cartItems');
+        if(savedCart){
+            try {
+                setCartItems(JSON.parse(savedCart));
+            }
+            catch(error) {
+                console.error('Error loading cart from localStorage:', error);
+                setCartItems({});
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems]);
+
     //Update token in localStorage when it changes
     useEffect(() => {
         if (token) {
             localStorage.setItem('token', token);
-        } else {
+        } 
+        else {
             localStorage.removeItem('token');
         }
     }, [token]);
@@ -47,7 +65,8 @@ const ShopContextProvider = (props) => {
                     if(cartItems[items][item]>0){
                         totalCount+=cartItems[items][item];
                     }
-                } catch(err){
+                } 
+                catch(err){
                     console.error(err);
                 }
             }
@@ -68,6 +87,11 @@ const ShopContextProvider = (props) => {
             }
         }
         setCartItems(cartData);
+    }
+
+    const clearCart = () => {
+        setCartItems({});
+        localStorage.removeItem('cartItems');
     }
 
     const getCartAmount = () =>{
@@ -121,7 +145,7 @@ const ShopContextProvider = (props) => {
         products, currency, delivery_fee,
         search, setSearch, showSearch, setShowSearch,
         cartItems, setCartItems, addToCart,
-        getCartCount, updateQuantity,
+        getCartCount, updateQuantity, clearCart,
         getCartAmount, navigate,
         backendUrl: 'http://localhost:3000',
         token: localStorage.getItem('token') || null,
