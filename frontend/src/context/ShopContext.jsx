@@ -1,6 +1,7 @@
 import {createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { products as staticProducts } from '../assets/frontend_assets/assets';
+import config from '../config/config.js';
 
 export const ShopContext = createContext();
 
@@ -220,7 +221,7 @@ const ShopContextProvider = (props) => {
 
     //Fetch products from backend, fallback to static if failed to fetch
     useEffect(()=>{
-        fetch('/api/product/list')
+        fetch(`${config.apiUrl}/product/list`)
           .then(res => res.json())
           .then(data => {
             if(data.success && Array.isArray(data.products)){
@@ -261,7 +262,7 @@ const ShopContextProvider = (props) => {
         cartItems, setCartItems, addToCart,
         getCartCount, updateQuantity, clearCart,
         getCartAmount, navigate, loadCartFromBackend,
-        backendUrl: 'http://localhost:3000',
+        backendUrl: config.backendUrl,
         token: localStorage.getItem('token') || null,
         setToken: setToken
     }

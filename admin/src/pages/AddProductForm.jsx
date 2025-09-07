@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import config from '../config/config.js';
 
 const categories = ['Men', 'Women', 'Kids'];
 const subCategories = ['Topwear', 'Bottomwear', 'Winterwear'];
@@ -43,7 +44,7 @@ export default function AddProductForm({ onProductAdded }) {
       formData.append('sizes', JSON.stringify(sizes));
       formData.append('bestSeller', bestSeller);
       const token = localStorage.getItem('admin_token');
-      const res = await fetch('http://localhost:3000/api/product/add', {
+      const res = await fetch(`${config.apiUrl}/product/add`, {
         method: 'POST',
         body: formData,
         headers: { 'token': token }

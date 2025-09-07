@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import config from '../config/config.js';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -18,7 +19,7 @@ export default function Products() {
 
         console.log('🔍 Fetching products with token:', token.substring(0, 20) + '...');
         
-        const response = await fetch('http://localhost:3000/api/product/list', {
+        const response = await fetch(`${config.apiUrl}/product/list`, {
           headers: {
             'token': token,
           },
@@ -63,7 +64,7 @@ export default function Products() {
         setLoading(true);
         const token = localStorage.getItem('admin_token');
         
-        const response = await fetch('http://localhost:3000/api/product/remove', {
+        const response = await fetch(`${config.apiUrl}/product/remove`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

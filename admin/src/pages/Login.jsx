@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import config from '../config/config.js';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -14,7 +15,7 @@ export default function Login() {
     try {
       console.log('Attempting admin login...');
       
-      const response = await fetch('http://localhost:3000/api/user/admin', {
+      const response = await fetch(`${config.apiUrl}/user/admin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

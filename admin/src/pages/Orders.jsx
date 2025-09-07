@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import config from '../config/config.js';
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -35,7 +36,7 @@ export default function Orders() {
         console.log('Token format looks valid');
         console.log('Fetching orders with token:', token.substring(0, 20) + '...');
         
-        const response = await fetch('http://localhost:3000/api/order/admin/orders', {
+        const response = await fetch(`${config.apiUrl}/order/admin/orders`, {
           headers: {
             'token': token,
           },
@@ -79,7 +80,7 @@ export default function Orders() {
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
       const token = localStorage.getItem('admin_token');
-      const response = await fetch('http://localhost:3000/api/order/admin/update-status', {
+      const response = await fetch(`${config.apiUrl}/order/admin/update-status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
