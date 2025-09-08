@@ -91,7 +91,7 @@ const Navbar = () => {
           <NavLink onClick={()=> setVisible(false)} className='py-2 pl-6 border' to='/collection'>COLLECTION</NavLink>
           <NavLink onClick={()=> setVisible(false)} className='py-2 pl-6 border' to='/about'>ABOUT</NavLink>
           <NavLink onClick={()=> setVisible(false)} className='py-2 pl-6 border' to='/contact'>CONTACT</NavLink>
-          <a href='http://localhost:5174' target='_blank' rel='noopener noreferrer' className='py-2 pl-6 border cursor-pointer hover:bg-gray-50'>ADMIN PANEL</a>
+          <a href='https://vestraa-adminpanel.vercel.app' target='_blank' rel='noopener noreferrer' className='py-2 pl-6 border cursor-pointer hover:bg-gray-50'>ADMIN PANEL</a>
         </div>
       </div>
     </div>
