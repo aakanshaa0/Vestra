@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+
+  backend:
+    build: ./backend
+    container_name: vestra-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./backend/.env
+    networks:
+      - vestra-network
+
+  frontend:
+    build: ./frontend
+    container_name: vestra-frontend
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./frontend/.env
+    environment:
+      - VITE_API_TARGET=http://backend:3000
+    depends_on:
+      - backend
+    networks:
+      - vestra-network
+
+  admin:
+    build: ./admin
+    container_name: vestra-admin
+    ports:
+      - "5174:5174"
+    env_file:
+      - ./admin/.env
+    environment:
+      - VITE_API_TARGET=http://backend:3000
+    depends_on:
+      - backend
+    networks:
+      - vestra-network
+
+networks:
+  vestra-network:
+    driver: bridge
